@@ -1,0 +1,67 @@
+{{ define "index" }}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}} {{template "navbar" .}}
+
+<body class="w3-theme">
+    <header class="w3-container w3-theme w3-padding" id="myHeader">
+        <div class="w3-row">
+            {{if .user}}
+            <div class=" w3-animate-left">
+                <div class="w3-center w3-xlarge">
+                    <h4>PLAY HOKM GAME ONLINE IN</h4>
+                    <h1 class="w3-xxxlarge w3-animate-bottom"><span class="glyphicon glyphicon-king"></span> HAKEM<span class="glyphicon glyphicon-king"></span> </h1>
+                    </br>
+                    </br>
+                </div>
+            </div>
+            {{else}}
+            <div class="w3-col m8 w3-animate-left">
+                <div class="w3-center w3-xlarge">
+                    <h4>PLAY HOKM GAME ONLINE IN</h4>
+                    <h1 class="w3-xxxlarge w3-animate-bottom">HAKEM</h1>
+                    <div class="w3-padding-32">
+                        <a class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" style="font-weight:900;" href="signup">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-col m4 w3-animate-right">
+                <div class="w3-card-4">
+                    <header class="w3-container w3-theme">
+                        <h1>Login </h1>
+                    </header>
+                    <form method="POST" action="/login">
+                        <div class="w3-container">
+                            <input class="w3-input w3-theme" type="text" name="username">
+                            <label>Username</label>
+
+                            <input class="w3-input w3-theme" type="password" name="password">
+                            <label>password</label>
+                        </div>
+
+                        <footer class="w3-container w3-theme">
+                            <button type="submit" class="w3-btn w3-large w3-dark-grey w3-hover-light-grey w3-right" style="font-weight:900;">Login</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 w3-animate-left">
+                <h1> Welcome to Hakem online hokm game! </h1>
+                <h4> hakem is a site that you can play hokm game online with your friends so if you think you play hokm well signup
+                    and start</h4>
+            </div>
+            <div class="col-sm-6 text-center">
+                <img src="/static/spade_ace.png" class="img-responsive w3-animate-right" style="margin:auto;display:block;width:50%;">
+            </div>
+        </div>
+    </div>
+</body>
+{{template "footer" .}}
+
+</html>
+{{end}}

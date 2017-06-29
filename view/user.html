@@ -1,0 +1,118 @@
+{{ define "user" }}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}} {{template "navbar" .}}
+
+<body class="w3-theme">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="w3-card-4 w3-center w3-animate-left">
+                {{with .user}}
+                <div class="w3-card-4 w3-border">
+                    <header class="w3-container w3-grey">
+                        <h1>Wellcome {{.Username}}</h1>
+                    </header>
+                    <div class="w3-container">
+                        <p><img src="{{.ID|getUserImage}}" class="img-circle img-responsive" style="width:70%; margin:auto;"
+                                alt="Avatar"></p>
+                    </div>
+                    <footer class="w3-container w3-grey">
+                        Email:
+                        <div class="text-center">{{.Email}}</div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h3> wins:{{.GamesWin}}</h3>
+                            </div>
+                            <div class="col-xs-6">
+                                <h3>lose:{{.GamesLose}}</h3>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                {{end}}
+            </div>
+        </div>
+        </br>
+        <div class="col-sm-8">
+            <div class="w3-card-4 w3-border w3-animate-right">
+                <header class="w3-container w3-grey">
+                    <h1>Games
+                        <div class="w3-right"><a href="/gamemaker" class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey btn-block">new Game</a></div>
+                    </h1>
+                </header>
+                {{range .games}}
+                <div class="w3-card-4 w3-border w3-animate-right" style="margin:5px">
+                    <header class="w3-container w3-grey">
+                        <div class="row">
+                            <div class="col-sm-4 text-center">
+                                <h2>{{.Side1Username}}</h2>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <h2>VS</h2>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <h2>{{.Side2Username}}</h2>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="w3-container">
+                        <div class="col-sm-4 text-center">
+                            <h3>Wins:</h3>
+                            <h3>{{.Wins1}}</h3>
+                        </div>
+                        <div class="col-sm-4 text-center">
+
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Wins: </h3>
+                            <h3>{{.Wins2}}</h3>
+                        </div>
+                        {{if .Finished}}
+                        <div class="text-center">
+                            <h2> game finished</h2>
+                        </div>
+                        {{end}}
+                    </div>
+                    <footer class="w3-container w3-grey">
+                        {{if .Finished}}
+                        <a href="/endgame?game={{.GameID}}" class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey btn-block">end game</a>                        {{else}}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="/games?game={{.GameID}}" class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey btn-block">continue Game</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey btn-block" onclick="document.getElementById('{{.Side1Username}}{{.Side2Username}}').style.display='block'">Exit Game</button>
+                            </div>
+                        </div>
+                        {{end}}
+
+                    </footer>
+                </div>
+                <div id="{{.Side1Username}}{{.Side2Username}}" class="w3-modal">
+                    <div class="w3-modal-content w3-card-8 w3-animate-top">
+                        <header class="w3-container w3-theme-light">
+                            <span onclick="document.getElementById('{{.Side1Username}}{{.Side2Username}}').style.display='none'" class="w3-closebtn">&times;</span>
+                            <h4><span class="glyphicon glyphicon-warning-sign"></span>by exit this game you will lose the game
+                            </h4>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey btn-block" href="/deletegame?game={{.GameID}}">yes exit game</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey btn-block" onclick="document.getElementById('{{.Side1Username}}{{.Side2Username}}').style.display='none'">no not at all</button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="w3-padding">
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</body>
+{{template "footer" .}}
+
+</html>
+{{end}}

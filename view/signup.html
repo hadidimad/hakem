@@ -1,0 +1,52 @@
+{{ define "signup" }}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}} {{template "navbar" .}}
+
+<body class="w3-theme">
+    <div class="w3-card-4 w3-animate-bottom">
+        <header class="w3-container w3-theme">
+            <h1 class="w3-center">SignUp </h1>
+            <h3>Complete form to signup</h3>
+        </header>
+        <form method="POST">
+            <div class="w3-container">
+                <input class="w3-input w3-theme" type="text" name="username">
+                <label>Username</label> {{if .invalidUsername}}
+                <div class="alert alert-danger w3-theme"> <span class="glyphicon glyphicon-warning-sign"></span> invalid user name</div>
+                {{end}} {{if .takenusername}}
+                <div class="alert alert-danger w3-theme"> <span class="glyphicon glyphicon-warning-sign"></span> username has been taken</div>
+                {{end}}
+
+                <input class="w3-input w3-theme" type="password" name="password">
+                <label>password</label> {{if .passnotmatch}}
+                <div class="alert alert-danger w3-theme"> <span class="glyphicon glyphicon-warning-sign"></span>passwords not match together</div>
+                {{end}}
+
+                <input class="w3-input w3-theme" type="password" name="password-repeat">
+                <label>password repeat</label>
+
+                <input class="w3-input w3-theme" type="email" name="email">
+                <label>Email</label> {{if .takenemail}}
+                <div class="alert alert-danger w3-theme"> <span class="glyphicon glyphicon-warning-sign"></span>this E-mail used before</div>
+                {{end}}
+                <div class="form-group">
+                    <input type="hidden" name="token" value="{{.}}" />
+                    <input type="file" name="Image" class="" id="Image">
+                    <label for="Image">Image</label>
+                </div>
+                {{if .emptyfield}}
+                <div class="alert alert-danger w3-theme"> <span class="glyphicon glyphicon-warning-sign"></span>this fields cant be blank</div>
+                {{end}}
+            </div>
+
+            <footer class="w3-container w3-theme">
+                <button type="submit" class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey w3-col" style="font-weight:900;">SignUp</button>
+            </footer>
+        </form>
+    </div>
+</body>
+{{template "footer" .}}
+
+</html>
+{{end}}

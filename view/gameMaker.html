@@ -1,0 +1,66 @@
+{{define "gameMaker"}}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}} {{template "navbar" .}}
+
+<body class="w3-theme">
+    <div class="text-center">
+        <h1>Start new game</h1>
+        <h3> enter a username to start a game with </h3>
+        <form name="searchform">
+            <input type="text" class="w3-input w3-theme" style="width:80%; margin:auto;" name="search" />
+        </form>
+        <label>enter username</label>
+        </br>
+        </br>
+    </div>
+    <div id="users">
+    </div>
+</body>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid grey;
+    }
+</style>
+
+<script>
+    function getUsers() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var userJson = xhttp.responseText
+                var users = JSON.parse(userJson)
+                var usersHTML = '<table style="width:100%;border:1px grey solid;" class="w3-border">\
+                <tr>\
+                <th>UserName</th>\
+                <th>gamesWon</th>\
+                <th>gameslose</th>\
+                <th>start a game</th>\
+                </tr>\n';
+                for (var i = 0; i < users.length; i++) {
+                    usersHTML += ' <tr>\
+                        <td> '+ users[i].Username + ' </td>\
+                        <td> '+ users[i].GamesWin + ' </td> \
+                        <td> '+ users[i].GamesLose + '</td>\
+                        <td> <a href="/startgame?side2='+ users[i].Username + '" class="w3-btn w3-dark-grey w3-hover-light-grey btn-block" style="margin:auto;">StartGame</a></h2></td>\
+                        </tr>';
+                }
+                usersHTML += "</table>"
+                document.getElementById("users").innerHTML = usersHTML;
+            }
+        };
+        var key = document.searchform.search.value
+        console.log(key)
+        xhttp.open("GET", "/getuser?user=" + key, true);
+        xhttp.send();
+    }
+    setInterval(getUsers, 2000)
+
+</script>
+{{template "footer" .}}
+
+</html>
+{{end}}

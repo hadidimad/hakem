@@ -1,0 +1,31 @@
+{{ define "login" }}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}} {{template "navbar" .}}
+
+<body class="w3-theme">
+    <div class="w3-card-4">
+        <header class="w3-container w3-theme w3-animate-top">
+            <h1 class="w3-center">Login </h1>
+        </header>
+        <form method="POST">
+            <div class="w3-container  w3-animate-bottom">
+                <input class="w3-input w3-theme" type="text" name="username">
+                <label>Username</label>
+
+                <input class="w3-input w3-theme" type="password" name="password">
+                <label>password</label> {{if .invalid}}
+                <div class="alert alert-danger w3-theme"> <span class="glyphicon glyphicon-warning-sign"></span>username or password is wrong</div>
+                {{end}}
+            </div>
+
+            <footer class="w3-container w3-theme  w3-animate-bottom">
+                <button type="submit" class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey w3-col" style="font-weight:900;">Log in</button>
+            </footer>
+        </form>
+    </div>
+</body>
+{{template "footer" .}}
+
+</html>
+{{end}}

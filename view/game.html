@@ -1,0 +1,67 @@
+{{ define "game" }}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}} {{template "navbar" .}}
+
+<body class="w3-theme">
+    <div class="w3-center">
+        <div class="w3-card-4 w3-border text-center" style="width:100%;">
+            <header class="w3-container w3-grey">
+                <div class="row text-center">
+                    <div class="col-xs-4">
+                        <h1>{{.UserNameSide1}}</h1>
+                    </div>
+                    <div class="col-xs-4">
+                        <h1>VS</h1>
+                    </div>
+                    <div class="col-xs-4">
+                        <h1>{{.UserNameSide2}}</h1>
+                    </div>
+                </div>
+            </header>
+            <div id="downCards">
+            </div>
+            </br>
+            </br>
+            <footer class="w3-container w3-grey">
+                {{if .info}}
+                <h4><span class="glyphicon glyphicon-warning-sign"></span>{{.info}}</h4>
+                {{end}}
+            </footer>
+
+        </div>
+    </div>
+    <div class="w3-card-4 w3-border text-center" style="width:100%;">
+        <header class="w3-container w3-grey">
+            <h2> Your Cards</h2>
+        </header>
+        <div class="w3-container">
+            {{range .YourCards}}
+            <div class="col-xs-6 col-sm-3 col-lg-2">
+                <a href='/games?game={{$.GameID}}&card={"Mode":{{.Mode}},"Value":{{.Value}}}'>
+                <img src={{.|getCardImage}} class="img-responsive w3-hover-opacity" style="margin:4px;">
+                </a>
+            </div>
+            {{end}}
+        </div>
+    </div>
+</body>
+<script>
+    function getDownCards() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("downCards").innerHTML = xhttp.responseText;
+            }
+        };
+        xhttp.open("GET", "/gamesdowncard?game={{.GameID}}", true);
+        xhttp.send();
+    }
+    getDownCards()
+    setInterval(getDownCards, 500)
+
+</script>
+{{template "footer" .}}
+
+</html>
+{{end}}
